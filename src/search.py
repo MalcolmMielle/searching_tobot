@@ -31,8 +31,31 @@ class QuatZ(object):
 		self.q2=0
 		self.q3=cos(angle/2)
 		
-	def add(self, rot):
+	def mult(self, rot):
+		#Let Q1 and Q2 be two quaternions, which are defined, respectively, as (w1, x1, y1, z1) and (w2, x2, y2, z2).
+		#(Q1 * Q2).w = (w1w2 - x1x2 - y1y2 - z1z2)
+		#(Q1 * Q2).x = (w1x2 + x1w2 + y1z2 - z1y2)
+		#(Q1 * Q2).y = (w1y2 - x1z2 + y1w2 + z1x2)
+		#(Q1 * Q2).z = (w1z2 + x1y2 - y1x2 + z1w2
 		
+		#Multiplying
+		q0 = (q0*rot[0] - q1*rot[1] - q2*rot[2] - q3*rot[3])
+		q1 = (q0*rot[1] + q1*rot[0] + q2*rot[3] - q3*rot[2])
+		q2 = (q0*rot[2] - q1*rot[3] + q2*rot[0] + q3*rot[1])
+		q3 = (q0*rot[3] + q1*rot[2] - q2*rot[1] + q3*rot[0])
+		
+	def mult_arg(self, rot):
+		#Let Q1 and Q2 be two quaternions, which are defined, respectively, as (w1, x1, y1, z1) and (w2, x2, y2, z2).
+		#(Q1 * Q2).w = (w1w2 - x1x2 - y1y2 - z1z2)
+		#(Q1 * Q2).x = (w1x2 + x1w2 + y1z2 - z1y2)
+		#(Q1 * Q2).y = (w1y2 - x1z2 + y1w2 + z1x2)
+		#(Q1 * Q2).z = (w1z2 + x1y2 - y1x2 + z1w2
+		
+		#Multiplying
+		rot[0] = (q0*rot[0] - q1*rot[1] - q2*rot[2] - q3*rot[3])
+		rot[1] = (q0*rot[1] + q1*rot[0] + q2*rot[3] - q3*rot[2])
+		rot[2] = (q0*rot[2] - q1*rot[3] + q2*rot[0] + q3*rot[1])
+		rot[3] = (q0*rot[3] + q1*rot[2] - q2*rot[1] + q3*rot[0])
 	
 
 
@@ -75,6 +98,10 @@ def main():
 			So we 0 out the y and x"""
 			#print str(ud.pose_user.position.x)
 	
+			angle=QuatZ(180)
+			
+			angle.mult_arg(rot)
+			
 			
 			
 			move.goalmaker.move(poseStam)
