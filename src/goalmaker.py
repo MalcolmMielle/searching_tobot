@@ -63,7 +63,7 @@ class GoalMaker(object):
 			# We made it!
 			state = self.move_base.get_state()
 		if state == GoalStatus.SUCCEEDED:
-			rospy.loginfo("Goal succeeded! we have an object on us : %s" % str(object_flag) )
+			rospy.loginfo("Goal succeeded!")
 			return 'valid'
 		else:
 			return 'invalid'
